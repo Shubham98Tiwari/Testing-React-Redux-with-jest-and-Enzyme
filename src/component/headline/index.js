@@ -3,9 +3,9 @@ import { PropTypes } from "prop-types"; // import prop types
 
 export default class Headline extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+    // constructor(props) {
+    //     super(props);
+    // }
 
     render() {
 
