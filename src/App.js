@@ -6,6 +6,7 @@ import SharedButton from "./component/button";
 import ListItem from "./component/listItem";
 import {connect} from 'react-redux'
 import {fetchPosts} from './actions'
+import { number } from 'prop-types';
 
 const tempArr = [{
   fName: 'Shubham',
@@ -13,26 +14,53 @@ const tempArr = [{
   email: 'tiwarishubh1997@gmail.com',
   age: 22,
   onlineStatus: true
-}]
+}];
+
+// initialState
+const initialState ={
+  hideBtn: false
+};
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+
+    // define state 
+    this.state = {
+      ...initialState
+    }
     // binding fetch method as we are passing it in component
     this.fetch = this.fetch.bind(this);
   }
-
-  
 
   //fetch method
   fetch(){
     // dispatch action
     this.props.fetchPosts();
+
+    // calling exampleMethod_updatesState() after fetching posts
+    this.exampleMethod_updatesState();
+  }
+
+  // method for updating state
+  exampleMethod_updatesState() {
+    const {hideBtn} = this.state;
+    this.setState({
+      hideBtn: !hideBtn
+    });
+  }
+
+  //the example method that returns a value
+  exampleMethod_returnsAValue(number) {
+    return number + 1;
   }
 
   render() {
     const {posts} = this.props;
+
+    const {hideBtn} = this.state;  //get hideBtn state
+
 
     // SharedButton props
     const configButton = {
@@ -47,9 +75,12 @@ class App extends Component {
         </header>
         <section className="main">
           <Healine header="Posts" desc="Click the button to render posts" tempArr={tempArr}/>
-          {/* get post button */}
-          <SharedButton {...configButton}/>
 
+          {/* get post button */}
+          {!hideBtn && 
+            <SharedButton {...configButton}/>
+          }
+          
           {/* List showing  posts */}
           {posts.length > 0 && 
             <div>
